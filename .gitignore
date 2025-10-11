@@ -1,0 +1,18 @@
+# Build directories
+Debug/
+build/
+
+# Compiled output files
+*.elf
+*.map
+*.list
+*.o
+*.d
+*.mk
+
+# IDE-specific files
+.settings/
+*.launch
+
+# Others
+*.swp
