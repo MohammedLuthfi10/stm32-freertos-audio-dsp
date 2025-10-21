@@ -102,10 +102,6 @@ This project demonstrates:
 
 ## 🚀 Getting Started
 
-### 1️⃣ Clone the Repository
-```bash
-git clone https://your-repository-url/inertial-audio-engine.git
-
 # STM32F4 Audio Effects Project
 
 ## Setup Instructions
@@ -167,4 +163,5 @@ All tasks communicate via Stream Buffers, Queues, and Mutexes to ensure safe and
 - 💾 SD Card Integration: Record or playback audio via FATFS
 - 🌐 Network Control: Adjust effects remotely via TCP/IP or OSC
 - 📊 Visualizer: Add LCD to show waveforms or effect parameters in real-time
+
 
