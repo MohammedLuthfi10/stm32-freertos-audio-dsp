@@ -105,3 +105,66 @@ This project demonstrates:
 ### 1️⃣ Clone the Repository
 ```bash
 git clone https://your-repository-url/inertial-audio-engine.git
+
+# STM32F4 Audio Effects Project
+
+## Setup Instructions
+
+1. **Open in STM32CubeIDE**
+   - Launch STM32CubeIDE
+   - Go to File → Open Projects from File System...
+   - Select the cloned repository folder
+   - Click Finish
+
+2. **Build the Project**
+   - The project includes all peripheral and FreeRTOS configurations via the .ioc file.
+   - Click the Build button (🛠️) or press Ctrl + B.
+
+3. **Flash to the Board**
+   - Connect the STM32F4 Discovery board via Micro-USB
+   - Click the Run button (▶️) or press Ctrl + F11
+   - (This compiles, flashes, and starts debugging.)
+
+## How to Use
+
+- **Connect Headphones**
+  - Plug them into the 3.5mm jack.
+
+- **Power On**
+  - The board powers via USB.
+
+- **Select an Effect**
+  - Press the blue user button (B1) to cycle through effects.
+
+  | LED Indicator | Effect   |
+  |---------------|----------|
+  | No LED        | Bypass   |
+  | Green (LD4)   | Echo     |
+  | Orange (LD3)  | Flanger  |
+  | Red (LD5)     | Tremolo  |
+
+- **Control the Sound**
+  - Speak into the onboard MEMS microphone (marked “MIC”).
+  - Tilt the board left/right or forward/backward to modulate the sound dynamically.
+
+## Project Architecture
+
+The application runs five primary FreeRTOS tasks, each handling a dedicated subsystem:
+
+| Task              | Responsibility                              |
+|-------------------|---------------------------------------------|
+| audioInputTask    | Handles DMA/I2S microphone input            |
+| dspTask           | Processes audio and applies effects         |
+| audioOutputTask   | Sends processed data to DAC                 |
+| sensorTask        | Reads accelerometer via I2C                 |
+| uiTask            | Handles button and LED updates              |
+
+All tasks communicate via Stream Buffers, Queues, and Mutexes to ensure safe and synchronized data flow.
+
+## Future Enhancements
+
+- 🎶 More DSP Effects: Reverb, Pitch Shift, Distortion
+- 💾 SD Card Integration: Record or playback audio via FATFS
+- 🌐 Network Control: Adjust effects remotely via TCP/IP or OSC
+- 📊 Visualizer: Add LCD to show waveforms or effect parameters in real-time
+
