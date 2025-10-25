@@ -57,12 +57,30 @@ typedef enum {
 /**
  * @brief Configuration structure for SPI initialization (Master Mode).
  */
+/* A potential Init structure for SPI mode */
 typedef struct {
-    spi_baud_rate_t baud_rate_prescaler; //!< Clock speed prescaler.
-    spi_clock_polarity_t clock_polarity; //!< Clock polarity (CPOL).
-    spi_clock_phase_t clock_phase;       //!< Clock phase (CPHA).
-    spi_bit_order_t bit_order;           //!< MSB or LSB first.
-} spi_config_t;
+    uint32_t  Mode;             // Master or Slave (MSTR bit)
+    uint32_t  Direction;        // 2-line, 1-line, or Rx-only (BIDIMODE, RXONLY)
+    uint32_t  DataSize;         // 8-bit or 16-bit (DFF bit)
+    uint32_t  ClockPolarity;    // CPOL bit
+    uint32_t  ClockPhase;       // CPHA bit
+    uint32_t  NSS;              // Software or Hardware NSS (SSM, SSI bits)
+    uint32_t  BaudRatePrescaler;  // BR[2:0] bits
+    uint32_t  FirstBit;         // MSB or LSB first (LSBFIRST bit)
+    uint32_t  CRCEnable;        // (CRCEN bit)
+    uint32_t  CRCPolynomial;    // Value for SPI_CRCPR
+} SPI_Init_t;
+
+/* A potential Init structure for I2S mode */
+typedef struct {
+    uint32_t  Mode;           // Master/Slave, Tx/Rx (I2SCFG bits)
+    uint32_t  Standard;       // Philips, MSB-justified, etc. (I2SSTD bits)
+    uint32_t  DataLength;     // 16-bit, 24-bit, 32-bit (DATLEN bits)
+    uint32_t  ChannelLength;  // 16-bit or 32-bit (CHLEN bit)
+    uint32_t  ClockPolarity;  // (CKPOL bit)
+    uint32_t  AudioFrequency; // The desired Fs (e.g., 44100)
+    uint32_t  MCLKOutput;     // Enable Master Clock Output (MCKOE bit)
+} I2S_Init_t;
 
 /* --- Public API Functions --- */
 

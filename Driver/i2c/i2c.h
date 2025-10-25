@@ -26,8 +26,10 @@ typedef struct i2c_handle_t* i2c_handle_t;
 
 /** @brief I2C bus speed configuration. */
 typedef enum {
-    I2C_SPEED_STANDARD_100KHZ = 0,
-    I2C_SPEED_FAST_400KHZ,
+		i2c_speed_sm_100k,
+		i2c_speed_fm_400k,
+		i2c_speed_fmp_1m,
+		i2c_speed_unknown
 } i2c_speed_t;
 
 /**
@@ -36,6 +38,15 @@ typedef enum {
 typedef struct {
     i2c_speed_t speed;
     uint32_t peripheral_clock_hz; // The clock frequency of the I2C peripheral itself (e.g., APB1 clock)
+    uint32_t  DutyCycle;          // For Fast Mode (e.g., I2C_DUTYCYCLE_2 or I2C_DUTYCYCLE_16_9)
+    uint32_t  OwnAddress1;        // Slave address for this device
+    uint32_t  AddressingMode;     // e.g., I2C_ADDRESSINGMODE_7BIT or I2C_ADDRESSINGMODE_10BIT
+    uint32_t  DualAddressMode;    // Enable/Disable (for OAR2)
+    uint32_t  OwnAddress2;        // Second slave address
+    uint32_t  GeneralCallMode;    // Enable/Disable (listen for 0x00)
+    uint32_t  NoStretchMode;      // Enable/Disable (disable clock stretching)
+    uint32_t  DigitalNoiseFilter; // 0-15, how many clocks to filter
+    uint32_t  AnalogNoiseFilter;  // Enable/Disable
 } i2c_config_t;
 
 /* --- Public API Functions --- */

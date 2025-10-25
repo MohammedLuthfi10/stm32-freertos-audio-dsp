@@ -30,10 +30,33 @@ typedef struct timer_handle_t* timer_handle_t;
  *          The timer frequency will be (peripheral_clock / (prescaler + 1)).
  *          The update event (interrupt) frequency will be (timer_frequency / (period + 1)).
  */
+/* 1. Base Configuration (Used by ALL timers) */
 typedef struct {
-    uint32_t prescaler; // 16-bit or 32-bit value (0x0000 to 0xFFFF/0xFFFFFFFF)
-    uint32_t period;    // 16-bit or 32-bit auto-reload value
-} timer_config_t;
+    uint32_t Prescaler;       // Sets TIMx_PSC
+    uint32_t CounterMode;     // Up, Down, Center-Aligned (TIMx_CR1: DIR, CMS)
+    uint32_t Period;          // Sets TIMx_ARR (the "top" value)
+    uint32_t ClockDivision;   // Sets TIMx_CR1: CKD
+    uint32_t RepetitionCounter; // Sets TIMx_RCR (Advanced Timers ONLY)
+    uint32_t AutoReloadPreload; // Enable/Disable (TIMx_CR1: ARPE)
+} TIM_Base_Init_t;
+
+/* 2. Output Compare / PWM Channel Configuration (GP & Advanced) */
+typedef struct {
+    uint32_t OCMode;          // PWM1, PWM2, etc. (TIMx_CCMRx: OCxM)
+    uint32_t Pulse;           // Sets TIMx_CCRx (the "compare" value)
+    uint32_t OCPolarity;      // Active High/Low (TIMx_CCER: CCxP)
+    uint32_t OCNPolarity;     // Complementary Polarity (Advanced ONLY)
+    uint32_t OCIdleState;     // (Advanced ONLY)
+    uint32_t OCNIdleState;    // (Advanced ONLY)
+} TIM_OC_Init_t;
+
+/* 3. Input Capture Channel Configuration (GP & Advanced) */
+typedef struct {
+    uint32_t ICPolarity;      // Rising, Falling, Both (TIMx_CCER: CCxP, CCxNP)
+    uint32_t ICSelection;     // Direct, Indirect (TIMx_CCMRx: CCxS)
+    uint32_t ICPrescaler;     // (TIMx_CCMRx: ICxPSC)
+    uint32_t ICFilter;        // 0-15 (TIMx_CCMRx: ICxF)
+} TIM_IC_Init_t;
 
 /* --- Public API Functions --- */
 
